@@ -1,7 +1,6 @@
 # Elephant, Stripe Clojure Client
 
-Elephant is a modern 
-
+Elephant is a modern Clojure client for the [Stripe API](https://stripe.com/docs/api).
 
 ## Project Goals
 
