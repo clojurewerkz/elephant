@@ -107,4 +107,4 @@ the [Apache Public License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 ### What's in the Name?
 
 The library is inspired by a badass USSR cartoon about two detectives
-investigating a theft of a striped elephant.
+investigating theft of a striped elephant.
