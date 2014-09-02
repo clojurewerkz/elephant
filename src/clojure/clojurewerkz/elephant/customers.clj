@@ -10,3 +10,7 @@
 (defn ^IPersistentMap create
   [^IPersistentMap m]
   (cnv/customer->map (Customer/create m)))
+
+(defn ^IPersistentMap retrieve
+  [^String id]
+  (cnv/customer->map (Customer/retrieve id)))

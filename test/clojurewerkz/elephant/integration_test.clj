@@ -136,4 +136,11 @@
 
     (deftest test-customer-create
       (let [c (ecr/create customer)]
-        (is (= "J Bindings Customer" (:description c))))))
+        (is (= "J Bindings Customer" (:description c)))))
+
+    (deftest test-customer-retrieve
+      (let [x (ecr/create customer)
+            y (ecr/retrieve (:id x))]
+        (is (:id y))
+        (is (= (:id x) (:id y)))
+        (is (= (:created x) (:created y))))))

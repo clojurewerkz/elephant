@@ -10,6 +10,13 @@ that creates a customer:
            "description" "A. N. Awesome Customer"})
 ```
 
+`clojurewerkz.elephant.customers/retrieve` fetches customer
+information by id:
+
+``` clojure
+(c/retrieve "cus_4hnqECORF7glfI")
+```
+
 ### Refunds Options, Partial Refunds
 
 `clojurewerkz.elephant.charges/refund` now supports
