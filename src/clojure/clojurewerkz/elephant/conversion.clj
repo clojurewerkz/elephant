@@ -4,8 +4,8 @@
   (:import [clojure.lang IPersistentMap]
            java.util.List
            [com.stripe.model StripeCollection StripeColllectionAPIResource
-            Account Balance BalanceTransaction Card Charge Dispute Fee Money
-            Refund]))
+            Account Balance BalanceTransaction Card Charge Coupon Customer Dispute
+            Discount Fee Money NextRecurringCharge Subscription Refund]))
 
 
 ;;
@@ -161,3 +161,93 @@
    :failure-message       (.getFailureMessage c)
    :failure-code          (.getFailureCode c)
    :__origin__            c})
+
+(declare discount->map)
+(defn ^IPersistentMap subscription->map
+  [^Subscription s]
+  {:id                     (.getId s)
+   ;; TODO: convert to UTC date with clj-time
+   :current-period-start   (.getCurrentPeriodStart s)
+   ;; TODO: convert to UTC date with clj-time
+   :current-period-end     (.getCurrentPeriodEnd s)
+   :cancel-at-period-end   (.getCancelAtPeriodEnd s)
+   :customer               (.getCustomer s)
+   :start                  (.getStart s)
+   :status                 (.getStatus s)
+   ;; TODO: convert to UTC date with clj-time
+   :trial-start            (.getTrialStart s)
+   ;; TODO: convert to UTC date with clj-time
+   :trial-end              (.getTrialEnd s)
+   ;; TODO: convert to UTC date with clj-time
+   :cancelled-at           (.getCancelledAt s)
+   ;; TODO: convert to UTC date with clj-time
+   :ended-at               (.getEndedAt s)
+   :quantity               (.getQuantity s)
+   :discount               (when-let [d (.getDiscount s)]
+                             (discount->map d))
+   :application-fee-percent (.getApplicationFeePercent s)
+   :metadata                (into {} (.getMetadata s))
+   :__origin__             s})
+
+(defn ^IPersistentMap coupon->map
+  [^Coupon c]
+  {:id          (.getId c)
+   :percent_off (.getPercentOff c)
+   :amount_off  (.getAmountOff c)
+   :currency    (.getCurrency c)
+   :duration    (.getDuration c)
+   :live-mode?  (.getLivemode c)
+   :duration-in-months (.getDurationInMonths c)
+   :max-redemptions    (.getMaxRedemptions c)
+   :redeem-by          (.getRedeemBy c)
+   :times-redeemed     (.getTimesRedeemed c)
+   :valid?             (.getValid c)
+   :metadata           (into {} (.getMetadata c))
+   :__origin__ c})
+
+(defn ^IPersistentMap discount->map
+  [^Discount d]
+  {:id         (.getId d)
+   ;; TODO: convert to UTC date with clj-time
+   :start      (.getStart d)
+   ;; TODO: convert to UTC date with clj-time
+   :end          (.getEnd d)
+   :customer     (.getCustomer d)
+   :subscription (.getSubscription d)
+   :coupon       (when-let [c (.getCoupon d)]
+                   (coupon->map c))
+   :__origin__ d})
+
+(defn ^IPersistentMap next-recurring-charge->map
+  [^NextRecurringCharge nrc]
+  {:amount     (.getAmount nrc)
+   ;; TODO: convert to UTC date with clj-time
+   :date       (.getData nrc)
+   :__origin__ nrc})
+
+(defn ^IPersistentMap customer->map
+  [^Customer c]
+  {:id           (.getId c)
+   :description  (.getDescription c)
+   :default-card (.getDefaultCard c)
+   :email        (.getEmail c)
+   :account-balance (.getAccountBalance c)
+   :delinquent?     (.getDelinquent c)
+   :next-recurring-charge (when-let [nrc (.getNextRecurringCharge c)]
+                            (next-recurring-charge->map nrc))
+   :cards           (doall (map card->map (if-let [^StripeColllectionAPIResource xs (.getCards c)]
+                                            (.getData xs)
+                                            [])))
+   :subscriptions   (doall (map subscription->map (if-let [^StripeColllectionAPIResource xs (.getSubscriptions c)]
+                                                    (.getData xs)
+                                                    [])))
+   ;; TODO: convert to UTC date with clj-time
+   :created      (.getCreated c)
+   :discount     (when-let [d (.getDiscount c)]
+                   (discount->map d))
+   ;; TODO: convert to UTC date with clj-time
+   :trial-end    (.getTrialEnd c)
+   :live-mode?   (.getLivemode c)
+   :deleted?     (.getDeleted c)
+   :metadata     (into {} (.getMetadata c))
+   :__origin__  c})

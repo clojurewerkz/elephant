@@ -1,5 +1,15 @@
 ## Changes Between 1.0.0-alpha1 and 1.0.0-alpha2
 
+### Customers
+
+`clojurewerkz.elephant.customers/create` is a new function
+that creates a customer:
+
+``` clojure
+(c/create {"card"        cc
+           "description" "A. N. Awesome Customer"})
+```
+
 ### Refunds Options, Partial Refunds
 
 `clojurewerkz.elephant.charges/refund` now supports

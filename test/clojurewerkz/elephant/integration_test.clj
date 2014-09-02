@@ -1,9 +1,10 @@
 (ns clojurewerkz.elephant.integration-test
     (:require [clojure.test :refer :all]
               [clojurewerkz.elephant.test-helpers :as th]
-              [clojurewerkz.elephant.accounts :as ea]
-              [clojurewerkz.elephant.balances :as eb]
-              [clojurewerkz.elephant.charges  :as ech]))
+              [clojurewerkz.elephant.accounts  :as ea]
+              [clojurewerkz.elephant.balances  :as eb]
+              [clojurewerkz.elephant.charges   :as ech]
+              [clojurewerkz.elephant.customers :as ecr]))
 
 (use-fixtures :each th/set-up-stripe-test-key)
 
@@ -131,4 +132,8 @@
                                               "exp_month" 12
                                               "exp_year"  2015})]
         (is (thrown? com.stripe.exception.CardException
-                     (ech/create m))))))
+                     (ech/create m)))))
+
+    (deftest test-customer-create
+      (let [c (ecr/create customer)]
+        (is (= "J Bindings Customer" (:description c))))))
