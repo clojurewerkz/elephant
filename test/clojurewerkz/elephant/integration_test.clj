@@ -114,5 +114,8 @@
         (println rs)
         (is (= (-> rs first :charge) (:id y)))))
 
-    (deftest test-charge-refund-update
-      ))
+    (deftest test-charge-capture
+      (let [x (ech/create (merge chg {"capture" false}))
+            y (ech/capture x)]
+        (is (false? (:captured? x)))
+        (is (:captured? y)))))
