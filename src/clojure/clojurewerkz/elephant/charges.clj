@@ -28,11 +28,13 @@
      (cnv/charge->map (Charge/retrieve id key))))
 
 (defn refund
-  [^IPersistentMap m]
-  (if-let [o (:__origin__ m)]
-    (cnv/charge->map (.refund o))
-    (throw (IllegalArgumentException.
-            "charges/refund only accepts maps returned by charges/create and charges/retrieved"))))
+  ([^IPersistentMap charge]
+     (refund charge {}))
+  ([^IPersistentMap charge ^IPersistentMap opts]
+     (if-let [o (:__origin__ charge)]
+       (cnv/charge->map (.refund o opts))
+       (throw (IllegalArgumentException.
+               "charges/refund only accepts maps returned by charges/create and charges/retrieved")))))
 
 (defn capture
   [^IPersistentMap m]

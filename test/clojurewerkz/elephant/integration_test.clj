@@ -111,8 +111,14 @@
             rs (:refunds y)]
         (is (:refunded? y))
         (is (= 1 (count rs)))
-        (println rs)
         (is (= (-> rs first :charge) (:id y)))))
+
+    (deftest test-charge-partial-refund
+      (let [n  50
+            x  (ech/create chg)
+            y  (ech/refund x {"amount" n})]
+        (is (not (:refunded? y)))
+        (is (= n (:amount-refunded y)))))
 
     (deftest test-charge-capture
       (let [x (ech/create (merge chg {"capture" false}))

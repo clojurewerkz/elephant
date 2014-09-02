@@ -145,7 +145,8 @@
    :created    (.getCreated c)
    :live-mode? (.getLivemode c)
    :paid?      (.getPaid c)
-   :refunded?  (.getRefunded c)
+   :refunded?       (.getRefunded c)
+   :amount-refunded (.getAmountRefunded c)
    :refunds    (doall (map refund->map (if-let [^StripeColllectionAPIResource xs (.getRefunds c)]
                                          (.getData xs)
                                          [])))
