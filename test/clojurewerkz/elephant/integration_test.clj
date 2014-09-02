@@ -124,4 +124,11 @@
       (let [x (ech/create (merge chg {"capture" false}))
             y (ech/capture x)]
         (is (false? (:captured? x)))
-        (is (:captured? y)))))
+        (is (:captured? y))))
+
+    (deftest test-charge-with-invalid-card
+      (let [m (assoc chg "card" {"number" "4242424242424241"
+                                              "exp_month" 12
+                                              "exp_year"  2015})]
+        (is (thrown? com.stripe.exception.CardException
+                     (ech/create m))))))
