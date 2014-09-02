@@ -4,6 +4,7 @@
               [clojurewerkz.elephant.accounts  :as ea]
               [clojurewerkz.elephant.balances  :as eb]
               [clojurewerkz.elephant.charges   :as ech]
+              [clojurewerkz.elephant.cards     :as ecc]
               [clojurewerkz.elephant.customers :as ecr]))
 
 (use-fixtures :each th/set-up-stripe-test-key)
@@ -143,4 +144,12 @@
             y (ecr/retrieve (:id x))]
         (is (:id y))
         (is (= (:id x) (:id y)))
-        (is (= (:created x) (:created y))))))
+        (is (= (:created x) (:created y)))))
+
+    (deftest test-customer-card-update
+      (let [x (ecr/create customer)
+            s "J Bindings Cardholder, Jr."
+            m (-> x :cards first)
+            c (ecc/update m {"name" s})]
+        (is (= (:name c) s))
+        (is (= (:id c) (:id m))))))
