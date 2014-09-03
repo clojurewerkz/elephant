@@ -1,5 +1,19 @@
 ## Changes Between 1.0.0-alpha1 and 1.0.0-alpha2
 
+### Plans
+
+`clojurewerkz.elephant.plans/create` is a new function
+that creates a (subscription) plan:
+
+``` clojure
+(p/create {"id"             (str (java.util.UUID/randomUUID))
+           "amount"         10
+           "currency"       "usd"
+           "interval"       "month"
+           "interval_count" 2
+           "name"           "Basic Plan"})
+```
+
 ### Customers
 
 `clojurewerkz.elephant.customers/create` is a new function

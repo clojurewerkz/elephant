@@ -5,7 +5,9 @@
               [clojurewerkz.elephant.balances  :as eb]
               [clojurewerkz.elephant.charges   :as ech]
               [clojurewerkz.elephant.cards     :as ecc]
-              [clojurewerkz.elephant.customers :as ecr]))
+              [clojurewerkz.elephant.customers :as ecr]
+              [clojurewerkz.elephant.plans     :as ep])
+    (:import [java.util UUID]))
 
 (use-fixtures :each th/set-up-stripe-test-key)
 
@@ -152,4 +154,9 @@
             m (-> x :cards first)
             c (ecc/update m {"name" s})]
         (is (= (:name c) s))
-        (is (= (:id c) (:id m))))))
+        (is (= (:id c) (:id m)))))
+
+    (deftest test-plan-create
+      (let [x (ep/create (merge plan {"id" (format "MY-CLJ-PLAN-%s" (str (UUID/randomUUID)))}))]
+        (is (= 2 (:interval-count x)))
+        (is (= "month" (:interval x))))))

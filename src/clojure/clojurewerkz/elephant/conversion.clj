@@ -251,3 +251,17 @@
    :deleted?     (.getDeleted c)
    :metadata     (into {} (.getMetadata c))
    :__origin__  c})
+
+(defn ^IPersistentMap plan->map
+  [p]
+  {:id         (.getId p)
+   :amount     (.getAmount p)
+   :currency   (.getCurrency p)
+   :interval       (.getInterval p)
+   :interval-count (.getIntervalCount p)
+   :name           (.getName p)
+   :trial-period-days     (.getTrialPeriodDays p)
+   :statement-description (.getStatementDescription p)
+   :live-mode?            (.getLivemode p)
+   :metadata              (into {} (.getMetadata p))
+   :__origin__ p})
