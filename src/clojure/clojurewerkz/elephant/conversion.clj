@@ -179,13 +179,15 @@
    ;; TODO: convert to UTC date with clj-time
    :trial-end              (.getTrialEnd s)
    ;; TODO: convert to UTC date with clj-time
-   :cancelled-at           (.getCancelledAt s)
+   :cancelled-at           (.getCanceledAt s)
    ;; TODO: convert to UTC date with clj-time
    :ended-at               (.getEndedAt s)
    :quantity               (.getQuantity s)
    :discount               (when-let [d (.getDiscount s)]
                              (discount->map d))
    :application-fee-percent (.getApplicationFeePercent s)
+   :plan                    (when-let [p (.getPlan s)]
+                              (plan->map p))
    :metadata                (into {} (.getMetadata s))
    :__origin__             s})
 
@@ -251,6 +253,11 @@
    :deleted?     (.getDeleted c)
    :metadata     (into {} (.getMetadata c))
    :__origin__  c})
+
+(declare plan->map)
+(defn plans-coll->seq
+  [^StripeCollection xs]
+  (map plan->map (.getData xs)))
 
 (defn ^IPersistentMap plan->map
   [p]

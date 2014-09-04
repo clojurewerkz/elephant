@@ -11,6 +11,10 @@
 
 (use-fixtures :each th/set-up-stripe-test-key)
 
+(defn unique-plan
+  [m]
+  (merge m {"id" (format "MY-CLJ-PLAN-%s" (str (UUID/randomUUID)))}))
+
 (let [cc {"number"    "4242424242424242"
             "exp_month" 12
             "exp_year"  2015
@@ -157,6 +161,37 @@
         (is (= (:id c) (:id m)))))
 
     (deftest test-plan-create
-      (let [x (ep/create (merge plan {"id" (format "MY-CLJ-PLAN-%s" (str (UUID/randomUUID)))}))]
+      (let [x (ep/create (unique-plan plan))]
         (is (= 2 (:interval-count x)))
-        (is (= "month" (:interval x))))))
+        (is (= "month" (:interval x)))))
+
+    (deftest test-plan-create-with-statement-description
+      (let [s "ClojureWerkz"
+            x (ep/create (merge (unique-plan plan) {"statement_description" s}))]
+        (is (= s (:statement-description x)))))
+
+    (deftest test-plan-update
+      (let [s "New Plan Name"
+            x (ep/create (unique-plan plan))
+            y (ep/update x {"name" s})
+            z (ep/retrieve (:id y))]
+        (is (= (:name y) (:name z) s))))
+
+    (deftest test-plan-list
+      (let [x  (ep/create (unique-plan plan))
+            xs (ep/list {"count" 1})]
+        (is (= 1 (count xs)))))
+
+    (deftest test-create-customer-with-plan
+      (let [p (ep/create (unique-plan plan))
+            c (ecr/create customer)
+            x (ecr/subscribe c {"plan" (:id p)})]
+        (is (= (:id p) (get-in x [:plan :id])))))
+
+    (deftest test-update-subscription
+      (let [p1 (ep/create (unique-plan plan))
+            p2 (ep/create (unique-plan plan))
+            c  (ecr/create customer)
+            x  (ecr/subscribe c {"plan" (:id p1)})
+            y  (ecr/update-subscription c {"plan" (:id p2)})]
+        (is (= (:id p2) (get-in y [:plan :id]))))))

@@ -34,11 +34,11 @@
      (if-let [o (:__origin__ charge)]
        (cnv/charge->map (.refund o opts))
        (throw (IllegalArgumentException.
-               "charges/refund only accepts maps returned by charges/create and charges/retrieved")))))
+               "charges/refund only accepts maps returned by charges/create and charges/retrieve")))))
 
 (defn capture
   [^IPersistentMap m]
   (if-let [o (:__origin__ m)]
     (cnv/charge->map (.capture o))
     (throw (IllegalArgumentException.
-            "charges/capture only accepts maps returned by charges/create and charges/retrieved"))))
+            "charges/capture only accepts maps returned by charges/create and charges/retrieve"))))
