@@ -163,6 +163,7 @@
    :__origin__            c})
 
 (declare discount->map)
+(declare plan->map)
 (defn ^IPersistentMap subscription->map
   [^Subscription s]
   {:id                     (.getId s)

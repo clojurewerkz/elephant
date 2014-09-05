@@ -1,12 +1,13 @@
 (ns clojurewerkz.elephant.integration-test
     (:require [clojure.test :refer :all]
-              [clojurewerkz.elephant.test-helpers :as th]
-              [clojurewerkz.elephant.accounts  :as ea]
-              [clojurewerkz.elephant.balances  :as eb]
-              [clojurewerkz.elephant.charges   :as ech]
-              [clojurewerkz.elephant.cards     :as ecc]
-              [clojurewerkz.elephant.customers :as ecr]
-              [clojurewerkz.elephant.plans     :as ep])
+              [clojurewerkz.elephant.test-helpers  :as th]
+              [clojurewerkz.elephant.accounts      :as ea]
+              [clojurewerkz.elephant.balances      :as eb]
+              [clojurewerkz.elephant.charges       :as ech]
+              [clojurewerkz.elephant.cards         :as ecc]
+              [clojurewerkz.elephant.customers     :as ecr]
+              [clojurewerkz.elephant.plans         :as ep]
+              [clojurewerkz.elephant.subscriptions :as esub])
     (:import [java.util UUID]))
 
 (use-fixtures :each th/set-up-stripe-test-key)
@@ -193,5 +194,5 @@
             p2 (ep/create (unique-plan plan))
             c  (ecr/create customer)
             x  (ecr/subscribe c {"plan" (:id p1)})
-            y  (ecr/update-subscription c {"plan" (:id p2)})]
+            y  (esub/update x {"plan" (:id p2)})]
         (is (= (:id p2) (get-in y [:plan :id]))))))
