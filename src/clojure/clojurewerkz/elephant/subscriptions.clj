@@ -2,7 +2,8 @@
   (:require [clojurewerkz.elephant.conversion :as cnv]
             [clojure.walk :as wlk])
   (:import [clojure.lang IPersistentMap]
-           [com.stripe.model Subscription]))
+           [com.stripe.model Subscription])
+  (:refer-clojure :exclude [list update]))
 
 ;;
 ;; API

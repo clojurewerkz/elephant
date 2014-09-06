@@ -1,6 +1,7 @@
 (ns clojurewerkz.elephant.cards
   (:require [clojurewerkz.elephant.conversion :as cnv])
-  (:import [clojure.lang IPersistentMap]))
+  (:import [clojure.lang IPersistentMap])
+  (:refer-clojure :exclude [list update]))
 
 ;;
 ;; API
