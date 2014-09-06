@@ -1,4 +1,4 @@
-## Changes Between 1.0.0-alpha1 and 1.0.0-alpha2
+## Changes Between 1.0.0-alpha1 and 1.0.0-beta1
 
 ### Subscriptions
 
