@@ -195,4 +195,11 @@
             c  (ecr/create customer)
             x  (ecr/subscribe c {"plan" (:id p1)})
             y  (esub/update x {"plan" (:id p2)})]
-        (is (= (:id p2) (get-in y [:plan :id]))))))
+        (is (= (:id p2) (get-in y [:plan :id])))))
+
+    (deftest test-cancel-subscription
+      (let [p (ep/create (unique-plan plan))
+            c (ecr/create customer)
+            x (ecr/subscribe c {"plan" (:id p)})
+            y (esub/cancel x)]
+        (is (:cancelled-at y)))))
