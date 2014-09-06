@@ -1,5 +1,61 @@
 ## Changes Between 1.0.0-alpha1 and 1.0.0-alpha2
 
+### Subscriptions
+
+`clojurewerkz.elephant.plans/create` is a new function
+that creates a subscription for provided customer:
+
+``` clojure
+(require '[clojurewerkz.elephant.customers     :as ecr])
+(require '[clojurewerkz.elephant.plans         :as ep])
+(require '[clojurewerkz.elephant.subscriptions :as esub])
+
+(let [p (ep/create (unique-plan plan))
+      c (ecr/create customer)]
+  (esub/create c {"plan" (:id p)}))
+```
+
+`clojurewerkz.elephant.plans/list` lists customer subscriptions:
+
+``` clojure
+(require '[clojurewerkz.elephant.customers     :as ecr])
+(require '[clojurewerkz.elephant.plans         :as ep])
+(require '[clojurewerkz.elephant.subscriptions :as esub])
+
+(let [p  (ep/create (unique-plan plan))
+      c  (ecr/create customer)
+      x  (esub/create c {"plan" (:id p)})]
+  (esub/list c))
+```
+
+`clojurewerkz.elephant.plans/update` updates a subscription:
+
+``` clojure
+(require '[clojurewerkz.elephant.customers     :as ecr])
+(require '[clojurewerkz.elephant.plans         :as ep])
+(require '[clojurewerkz.elephant.subscriptions :as esub])
+
+(let [p1 (ep/create (unique-plan plan))
+      p2 (ep/create (unique-plan plan))
+      c  (ecr/create customer)
+      x  (esub/create c {"plan" (:id p1)})]
+  (esub/update x {"plan" (:id p2)}))
+```
+
+`clojurewerkz.elephant.plans/cancel` cancels a subscription:
+
+``` clojure
+(require '[clojurewerkz.elephant.customers     :as ecr])
+(require '[clojurewerkz.elephant.plans         :as ep])
+(require '[clojurewerkz.elephant.subscriptions :as esub])
+
+(let [p (ep/create (unique-plan plan))
+      c (ecr/create customer)
+      x (esub/create c {"plan" (:id p)})]
+  (esub/cancel x))
+```
+
+
 ### Plans
 
 `clojurewerkz.elephant.plans/create` is a new function
