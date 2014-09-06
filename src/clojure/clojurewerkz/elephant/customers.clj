@@ -1,5 +1,6 @@
 (ns clojurewerkz.elephant.customers
-  (:require [clojurewerkz.elephant.conversion :as cnv]
+  (:require [clojurewerkz.elephant.conversion    :as cnv]
+            [clojurewerkz.elephant.subscriptions :as sub]
             [clojure.walk :as wlk])
   (:import [clojure.lang IPersistentMap]
            [com.stripe.model Customer]))
@@ -18,14 +19,4 @@
 
 (defn ^IPersistentMap subscribe
   [^IPersistentMap customer ^IPersistentMap subscription]
-  (if-let [o (:__origin__ customer)]
-    (cnv/subscription->map (.createSubscription o (wlk/stringify-keys subscription)))
-    (throw (IllegalArgumentException.
-            "customers/subscribe only accepts maps returned by customers/create and customers/retrieve"))))
-
-(defn ^IPersistentMap update-subscription
-  [^IPersistentMap customer ^IPersistentMap subscription]
-  (if-let [o (:__origin__ customer)]
-    (cnv/subscription->map (.updateSubscription o (wlk/stringify-keys subscription)))
-    (throw (IllegalArgumentException.
-            "customers/update-subscription only accepts maps returned by customers/create and customers/retrieve"))))
+  (sub/create customer subscription))

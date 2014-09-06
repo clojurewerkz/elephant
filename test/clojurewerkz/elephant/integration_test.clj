@@ -202,4 +202,12 @@
             c (ecr/create customer)
             x (ecr/subscribe c {"plan" (:id p)})
             y (esub/cancel x)]
-        (is (:cancelled-at y)))))
+        (is (:cancelled-at y))))
+
+    (deftest test-list-subscriptions
+      (let [p  (ep/create (unique-plan plan))
+            c  (ecr/create customer)
+            x  (esub/create c {"plan" (:id p)})
+            xs (esub/list c)]
+        (is (= 1 (count xs)))
+        (is (set (map :id xs)) (:id x)))))

@@ -192,6 +192,10 @@
    :metadata                (into {} (.getMetadata s))
    :__origin__             s})
 
+(defn subscriptions-coll->seq
+  [^StripeColllectionAPIResource xs]
+  (map subscription->map (.getData xs)))
+
 (defn ^IPersistentMap coupon->map
   [^Coupon c]
   {:id          (.getId c)
