@@ -59,7 +59,7 @@ please follow [@ClojureWerkz](https://twitter.com/clojurewerkz) on Twitter.
 
 ## Supported Clojure versions
 
-Elephant is built from the ground up for Clojure 1.6.0 and up.
+Elephant requires Clojure 1.6+.
 
 
 ## Continuous Integration Status
