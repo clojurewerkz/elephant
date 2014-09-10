@@ -166,6 +166,12 @@
         (is (= 2 (:interval-count x)))
         (is (= "month" (:interval x)))))
 
+    (deftest test-idempotent-plan-create
+      (let [x1 (ep/retrieve-or-create "CLJW-IDEMPOTENCE-PLAN" plan)
+            x2 (ep/retrieve-or-create "CLJW-IDEMPOTENCE-PLAN" plan)]
+        (is (= (:id x1) (:id x2)))
+        (is (= 2 (:interval-count x1) (:interval-count x2)))))
+
     (deftest test-plan-create-with-statement-description
       (let [s "ClojureWerkz"
             x (ep/create (merge (unique-plan plan) {"statement_description" s}))]

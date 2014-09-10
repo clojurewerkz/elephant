@@ -1,6 +1,21 @@
 ## Changes Between 1.0.0-beta1 and 1.0.0-beta2
 
-None yet.
+### plans/retrieve-or-create
+
+`clojurewerkz.elephant.plans/retrieve-or-create` is a new function
+that idempotently creates a plan:
+
+``` clojure
+(require '[clojurewerkz.elephant.plans         :as ep])
+
+;; will create the plan on first invocation,
+;; fetch and return it on subsequence ones
+(ep/retrieve-or-create "plan-id" {"amount"         100
+                                  "currency"       "usd"
+                                  "interval"       "month"
+                                  "interval_count" 2
+                                  "name"           "J Bindings Plan"})
+```
 
 
 ## Changes Between 1.0.0-alpha1 and 1.0.0-beta1
