@@ -1,7 +1,7 @@
 (defproject clojurewerkz/elephant "1.0.0-beta3-SNAPSHOT"
   :description "Stripe API client in Clojure"
   :dependencies [[org.clojure/clojure    "1.6.0"]
-                 [com.stripe/stripe-java "1.18.0"]]
+                 [com.stripe/stripe-java "1.19.1"]]
   :profiles {:1.5 {:dependencies [[org.clojure/clojure "1.5.1"]]}
              :1.7 {:dependencies [[org.clojure/clojure "1.7.0-alpha3"]]}
              :master {:dependencies [[org.clojure/clojure "1.7.0-master-SNAPSHOT"]]}
