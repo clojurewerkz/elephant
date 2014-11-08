@@ -151,6 +151,12 @@
             c (ecr/create {"description" s})]
         (is (= s (:description c)))))
 
+    (deftest test-customer-create-with-duplicate-id
+      (let [s "J Bindings Customer 2"
+            c (ecr/create {"description" s})]
+        (is (thrown? com.stripe.exception.InvalidRequestException
+                     (ecr/create {"description" s "id" (:id c)})))))
+
     (deftest test-customer-retrieve
       (let [x (ecr/create customer)
             y (ecr/retrieve (:id x))]
