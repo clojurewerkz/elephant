@@ -137,14 +137,19 @@
 
     (deftest test-charge-with-invalid-card
       (let [m (assoc chg "card" {"number" "4242424242424241"
-                                              "exp_month" 12
-                                              "exp_year"  2015})]
+                                 "exp_month" 12
+                                 "exp_year"  2015})]
         (is (thrown? com.stripe.exception.CardException
                      (ech/create m)))))
 
     (deftest test-customer-create
       (let [c (ecr/create customer)]
         (is (= "J Bindings Customer" (:description c)))))
+
+    (deftest test-customer-create-without-card
+      (let [s "J Bindings Customer 2"
+            c (ecr/create {"description" s})]
+        (is (= s (:description c)))))
 
     (deftest test-customer-retrieve
       (let [x (ecr/create customer)
