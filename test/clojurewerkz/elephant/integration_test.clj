@@ -157,6 +157,14 @@
         (is (thrown? com.stripe.exception.InvalidRequestException
                      (ecr/create {"description" s "id" (:id c)})))))
 
+    (deftest test-customer-find-or-create
+      (let [c1 (ecr/create customer)
+            id (:id c1)
+            c2 (ecr/retrieve-or-create id customer)
+            c3 (ecr/retrieve-or-create (str (UUID/randomUUID)) customer)]
+        (is (= id (:id c2)))
+        (is (not (= id (:id c3))))))
+
     (deftest test-customer-retrieve
       (let [x (ecr/create customer)
             y (ecr/retrieve (:id x))]
