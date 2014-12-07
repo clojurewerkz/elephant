@@ -3,7 +3,7 @@
             [clojure.walk :as wlk])
   (:import [com.stripe.model Plan]
            [clojure.lang IPersistentMap])
-  (:refer-clojure :exclude [list]))
+  (:refer-clojure :exclude [list update]))
 
 ;;
 ;; API
