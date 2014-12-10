@@ -1,4 +1,4 @@
-(defproject clojurewerkz/elephant "1.0.0-beta5"
+(defproject clojurewerkz/elephant "1.0.0-beta6-SNAPSHOT"
   :description "Stripe API client in Clojure"
   :dependencies [[org.clojure/clojure    "1.6.0"]
                  [com.stripe/stripe-java "1.19.1"]]
