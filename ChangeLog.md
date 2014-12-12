@@ -1,6 +1,50 @@
+## Changes Between 1.0.0-beta5 and 1.0.0-beta6
+
+### customers/list
+
+`clojurewerkz.elephant.customers/list` is a new function
+that lists customers:
+
+``` clojure
+(require '[clojurewerkz.elephant.customers :as ecr])
+
+(ecr/list)
+(ecr/list {"limit" 100})
+```
+
+## Changes Between 1.0.0-beta4 and 1.0.0-beta5
+
+### customers/retrieve-or-create
+
+`clojurewerkz.elephant.customers/retrieve-or-create` is a new function
+that idempotently creates a customer:
+
+``` clojure
+(require '[clojurewerkz.elephant.customers         :as ecr])
+
+;; will create the customer on first invocation,
+;; fetch and return it on subsequence ones
+(ecr/retrieve-or-create "customer-id" customer)
+```
+
+### Clojure 1.7 Compatibility
+
+The library now compiles with Clojure 1.7.
+
+
+## Changes Between 1.0.0-beta3 and 1.0.0-beta4
+
+### More Sensible Charge and Transfer Enabled Values 
+
+`charge-` and `transfer-enabled` values in customer maps now return `false`
+instead of `nil`.
+
+
 ## Changes Between 1.0.0-beta2 and 1.0.0-beta3
 
-None yet.
+### Upgrade to Stripe Java client 1.19.1
+
+Stripe Java client was upgraded to `1.19.1`.
 
 
 ## Changes Between 1.0.0-beta1 and 1.0.0-beta2
