@@ -5,7 +5,8 @@
            java.util.List
            [com.stripe.model StripeCollection StripeColllectionAPIResource
             Account Balance BalanceTransaction Card Charge Coupon Customer Dispute
-            Discount Fee Money NextRecurringCharge Subscription Refund]))
+            Discount Fee Money NextRecurringCharge Subscription Refund
+            DeletedCustomer]))
 
 
 ;;
@@ -277,3 +278,12 @@
    :live-mode?            (.getLivemode p)
    :metadata              (into {} (.getMetadata p))
    :__origin__ p})
+
+(defn customers-coll->seq
+  [^StripeCollection xs]
+  (map customer->map (.getData xs)))
+
+(defn ^IPersistentMap deleted-customer->map
+  [^DeletedCustomer c]
+  {:id       (.getId c)
+   :deleted? (.getDeleted c)})

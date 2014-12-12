@@ -180,6 +180,11 @@
         (is (= (:name c) s))
         (is (= (:id c) (:id m)))))
 
+    (deftest test-customer-list
+      (let [x  (ecr/create customer)
+            xs (ecr/list)]
+        (is (sequential? xs))))
+
     (deftest test-plan-create
       (let [x (ep/create (unique-plan plan))]
         (is (= 2 (:interval-count x)))

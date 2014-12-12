@@ -27,3 +27,23 @@
 (defn ^IPersistentMap subscribe
   [^IPersistentMap customer ^IPersistentMap subscription]
   (sub/create customer subscription))
+
+(defn list
+  ([]
+     (list {}))
+  ([m]
+     (cnv/customers-coll->seq (Customer/all (wlk/stringify-keys m))))
+  ([^String api-key m]
+     (cnv/customers-coll->seq (Customer/all (wlk/stringify-keys m)) api-key)))
+
+(defn ^IPersistentMap delete
+  ([m]
+     (if-let [o (:__origin__ m)]
+       (cnv/deleted-customer->map (.delete o))
+       (throw (IllegalArgumentException.
+               "customers/delete only accepts maps returned by customers/create, charges/retrieve, and customers/list"))))
+  ([m ^String api-key]
+     (if-let [o (:__origin__ m)]
+       (cnv/deleted-customer->map (.delete o api-key))
+       (throw (IllegalArgumentException.
+               "customers/delete only accepts maps returned by customers/create, charges/retrieve, and customers/list")))))
