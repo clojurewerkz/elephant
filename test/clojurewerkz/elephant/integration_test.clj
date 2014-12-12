@@ -8,7 +8,8 @@
               [clojurewerkz.elephant.customers     :as ecr]
               [clojurewerkz.elephant.plans         :as ep]
               [clojurewerkz.elephant.subscriptions :as esub])
-    (:import [java.util UUID]))
+    (:import java.util.UUID
+             com.stripe.exception.InvalidRequestException))
 
 (use-fixtures :each th/set-up-stripe-test-key)
 
@@ -63,6 +64,14 @@
                    "tax_id" "000000000"
                    "card"   dc
                    "bank_account" bank-acct}]
+    (defn delete-all-customers
+      []
+      (dotimes [i 3]
+        (doseq [c (ecr/list {"limit" 100})]
+          (try
+            (ecr/delete c)
+            (catch InvalidRequestException ire)))))
+
     (deftest test-account-retrieve
       (let [m (ea/retrieve)]
         (is (:id m))
@@ -181,9 +190,12 @@
         (is (= (:id c) (:id m)))))
 
     (deftest test-customer-list
+      (delete-all-customers)
+      (is (zero? (count (ecr/list))))
       (let [x  (ecr/create customer)
             xs (ecr/list)]
-        (is (sequential? xs))))
+        (is (sequential? xs))
+        (is (= #{(:id x)} (set (map :id xs))))))
 
     (deftest test-plan-create
       (let [x (ep/create (unique-plan plan))]
