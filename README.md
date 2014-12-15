@@ -11,7 +11,7 @@ Clojure data structures.
 
 ## Project Maturity
 
-Elephant is *very* young.
+Elephant is *very* young and under active development.
 
 
 ## Artifacts
