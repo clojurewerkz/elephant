@@ -76,8 +76,8 @@
       (let [m (ea/retrieve)]
         (is (:id m))
         (is (= "usd" (:default-currency m)))
-        (is (false? (:charge-enabled m)))
-        (is (false? (:transfer-enabled m)))))
+        (is (false? (:charges-enabled m)))
+        (is (false? (:transfers-enabled m)))))
 
     (deftest test-balance-retrieve
       (let [m (eb/retrieve)]
