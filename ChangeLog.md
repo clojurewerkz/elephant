@@ -1,3 +1,11 @@
+## Changes Between 1.0.0-beta6 and 1.0.0-beta7
+
+### Stripe Java Client Upgrade
+
+Stripe Java client was upgraded to `1.23.0`.
+
+
+
 ## Changes Between 1.0.0-beta5 and 1.0.0-beta6
 
 ### customers/list
