@@ -1,4 +1,7 @@
-(defproject clojurewerkz/elephant "1.0.0-beta6"
+(defproject clojurewerkz/elephant "1.0.0-beta7-SNAPSHOT"
+  :url         "https://github.com/clojurewerkz/elephant"
+  :license     {:name "Eclipse Public License"
+                :url "http://www.eclipse.org/legal/epl-v10.html"}
   :description "Stripe API client in Clojure"
   :dependencies [[org.clojure/clojure    "1.6.0"]
                  [com.stripe/stripe-java "1.19.1"]]
