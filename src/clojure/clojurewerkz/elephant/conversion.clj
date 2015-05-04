@@ -3,7 +3,7 @@
    Not supposed to be used directly, not a part of the public Elephant API."
   (:import [clojure.lang IPersistentMap]
            java.util.List
-           [com.stripe.model StripeCollection StripeColllectionAPIResource
+           [com.stripe.model StripeCollection StripeCollectionAPIResource
             Account Balance BalanceTransaction Card Charge Coupon Customer Dispute
             Discount Fee Money NextRecurringCharge Subscription Refund
             DeletedCustomer]))
@@ -118,7 +118,7 @@
    :__origin__ r})
 
 (defn refunds-coll->seq
-  [^StripeColllectionAPIResource xs]
+  [^StripeCollectionAPIResource xs]
   (map refund->map (.getData xs)))
 
 (defn ^IPersistentMap dispute->map
@@ -148,7 +148,7 @@
    :paid?      (.getPaid c)
    :refunded?       (.getRefunded c)
    :amount-refunded (.getAmountRefunded c)
-   :refunds    (doall (map refund->map (if-let [^StripeColllectionAPIResource xs (.getRefunds c)]
+   :refunds    (doall (map refund->map (if-let [^StripeCollectionAPIResource xs (.getRefunds c)]
                                          (.getData xs)
                                          [])))
    :captured?  (.getCaptured c)
@@ -194,7 +194,7 @@
    :__origin__             s})
 
 (defn subscriptions-coll->seq
-  [^StripeColllectionAPIResource xs]
+  [^StripeCollectionAPIResource xs]
   (map subscription->map (.getData xs)))
 
 (defn ^IPersistentMap coupon->map
@@ -243,10 +243,10 @@
    :delinquent?     (.getDelinquent c)
    :next-recurring-charge (when-let [nrc (.getNextRecurringCharge c)]
                             (next-recurring-charge->map nrc))
-   :cards           (doall (map card->map (if-let [^StripeColllectionAPIResource xs (.getCards c)]
+   :cards           (doall (map card->map (if-let [^StripeCollectionAPIResource xs (.getCards c)]
                                             (.getData xs)
                                             [])))
-   :subscriptions   (doall (map subscription->map (if-let [^StripeColllectionAPIResource xs (.getSubscriptions c)]
+   :subscriptions   (doall (map subscription->map (if-let [^StripeCollectionAPIResource xs (.getSubscriptions c)]
                                                     (.getData xs)
                                                     [])))
    ;; TODO: convert to UTC date with clj-time
