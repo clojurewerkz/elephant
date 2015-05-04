@@ -6,7 +6,7 @@
   :dependencies [[org.clojure/clojure    "1.6.0"]
                  [com.stripe/stripe-java "1.27.1"]]
   :profiles {:1.5 {:dependencies [[org.clojure/clojure "1.5.1"]]}
-             :1.7 {:dependencies [[org.clojure/clojure "1.7.0-alpha5"]]}
+             :1.7 {:dependencies [[org.clojure/clojure "1.7.0-beta2"]]}
              :master {:dependencies [[org.clojure/clojure "1.7.0-master-SNAPSHOT"]]}
              :dev {:resource-paths ["test/resources"]
                    :plugins [[codox "0.8.10"]]
