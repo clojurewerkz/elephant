@@ -4,7 +4,7 @@
                 :url "http://www.eclipse.org/legal/epl-v10.html"}
   :description "Stripe API client in Clojure"
   :dependencies [[org.clojure/clojure    "1.6.0"]
-                 [com.stripe/stripe-java "1.27.1"]]
+                 [com.stripe/stripe-java "1.31.0"]]
   :profiles {:1.5 {:dependencies [[org.clojure/clojure "1.5.1"]]}
              :1.7 {:dependencies [[org.clojure/clojure "1.7.0-beta2"]]}
              :master {:dependencies [[org.clojure/clojure "1.7.0-master-SNAPSHOT"]]}
