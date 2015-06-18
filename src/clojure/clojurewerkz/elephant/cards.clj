@@ -19,7 +19,16 @@
   (if-let [o (:__origin__ customer)]
     (cnv/card->map (.createCard o token))
     (throw (IllegalArgumentException.
-            "cards/create only accepts maps returned by customer/create and other library functions that return customer maps"))))
+            "cards/create-from-token only accepts maps returned by customer/create and other library functions that return customer maps"))))
+
+(defn retrieve
+  [^IPersistentMap customer ^String card-id]
+  (if-let [o (:__origin__ customer)]
+    (do (println (.getCards o))
+        (cnv/card->map (let [cs (.getCards o)]
+                         (.retrieve cs card-id))))
+    (throw (IllegalArgumentException.
+            "cards/retrieve only accepts maps returned by customer/create and other library functions that return customer maps"))))
 
 (defn update
   [^IPersistentMap card ^IPersistentMap opts]

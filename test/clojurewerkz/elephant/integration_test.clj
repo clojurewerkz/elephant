@@ -120,6 +120,12 @@
         (is (= "J Bindings Customer" (:description c)))
         (is (= (:last-4-digits m) "4444"))))
 
+    (deftest test-customer-retrieve-card
+      (let [c  (ecr/create customer)
+            m  (ecc/create c cc2)
+            m' (ecc/retrieve c (:id m))]
+        (is (= (:id m) (:id m')))))
+
 
     (deftest test-balance-transaction-retrieval
       (let [ch  (ech/create chg)
