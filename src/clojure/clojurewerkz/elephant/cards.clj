@@ -7,6 +7,20 @@
 ;; API
 ;;
 
+(defn create
+  [^IPersistentMap customer ^IPersistentMap card]
+  (if-let [o (:__origin__ customer)]
+    (cnv/card->map (.createCard o {"source" (merge card {"object" "card"})}))
+    (throw (IllegalArgumentException.
+            "cards/create only accepts maps returned by customer/create and other library functions that return customer maps"))))
+
+(defn create-from-token
+  [^IPersistentMap customer ^String token]
+  (if-let [o (:__origin__ customer)]
+    (cnv/card->map (.createCard o token))
+    (throw (IllegalArgumentException.
+            "cards/create only accepts maps returned by customer/create and other library functions that return customer maps"))))
+
 (defn update
   [^IPersistentMap card ^IPersistentMap opts]
   (if-let [o (:__origin__ card)]

@@ -18,6 +18,13 @@
        (throw (IllegalArgumentException.
                "subscriptions/list only accepts maps returned by customers/create and customers/retrieve")))))
 
+#_ (defn ^IPersistentMap retrieve
+  [^IPersistentMap customer ^String id]
+  (if-let [o (:__origin__ customer)]
+    (cnv/subscription->map (.createSubscription o (wlk/stringify-keys subscription)))
+    (throw (IllegalArgumentException.
+            "subscriptions/create only accepts maps returned by customers/create and customers/retrieve"))))
+
 (defn ^IPersistentMap create
   [^IPersistentMap customer ^IPersistentMap subscription]
   (if-let [o (:__origin__ customer)]

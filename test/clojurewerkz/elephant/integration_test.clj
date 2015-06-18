@@ -18,16 +18,27 @@
   (merge m {"id" (format "MY-CLJ-PLAN-%s" (str (UUID/randomUUID)))}))
 
 (let [cc {"number"    "4242424242424242"
-            "exp_month" 12
-            "exp_year"  2015
-            "cvc"       "123"
-            "name"      "J Bindings Cardholder"
-            "address_line1"   "140 2nd Street"
-            "address_line2"   "4th Floor"
-            "address_city"    "San Francisco"
-            "address_zip"     "94105"
-            "address_state"   "CA"
-            "address_country" "USA"}
+          "exp_month" 12
+          "exp_year"  2015
+          "cvc"       "123"
+          "name"      "J Bindings Cardholder"
+          "address_line1"   "140 2nd Street"
+          "address_line2"   "4th Floor"
+          "address_city"    "San Francisco"
+          "address_zip"     "94105"
+          "address_state"   "CA"
+          "address_country" "USA"}
+      cc2 {"number"    "5555555555554444"
+           "exp_month" 12
+           "exp_year"  2019
+           "cvc"       "123"
+           "name"      "J Bindings MC Cardholder"
+           "address_line1"   "140 2nd Street"
+           "address_line2"   "4th Floor"
+           "address_city"    "San Francisco"
+           "address_zip"     "94105"
+           "address_state"   "CA"
+           "address_country" "USA"}
         ;; debit card
         dc  {"number"    "4000056655665556"
              "exp_month" 12
@@ -102,6 +113,13 @@
             m  (ech/create (merge chg {:description "integration tests"
                                        :statement_description s}))]
         (is (= s (:statement-description m)))))
+
+    (deftest test-customer-create-card
+      (let [c (ecr/create customer)
+            m (ecc/create c cc2)]
+        (is (= "J Bindings Customer" (:description c)))
+        (is (= (:last-4-digits m) "4444"))))
+
 
     (deftest test-balance-transaction-retrieval
       (let [ch  (ech/create chg)
@@ -230,6 +248,15 @@
             c (ecr/create customer)
             x (ecr/subscribe c {"plan" (:id p)})]
         (is (= (:id p) (get-in x [:plan :id])))))
+
+    #_ (deftest test-retrieve-subscription
+      (let [p1 (ep/create (unique-plan plan))
+            p2 (ep/create (unique-plan plan))
+            c  (ecr/create customer)
+            x  (ecr/subscribe c {"plan" (:id p1)})
+            y  (esub/update x {"plan" (:id p2)})
+            f1 (esub/retrieve x)]
+        (is (= (:id p2) (get-in y [:plan :id])))))
 
     (deftest test-update-subscription
       (let [p1 (ep/create (unique-plan plan))
