@@ -1,3 +1,33 @@
+## Changes Between 1.0.0-beta8 and 1.0.0-beta9
+
+### cards/create and /create-from-token
+
+`clojurewerkz.elephant.cards/create` adds a new credit or
+debit card to a customer:
+
+``` clojure
+(require '[clojurewerkz.elephant.cards :as ecc])
+(require '[clojurewerkz.elephant.customers         :as ecr])
+
+(let [cc {"number"    "5555555555554444"
+           "exp_month" 12
+           "exp_year"  2019
+           "cvc"       "123"
+           "name"      "J Bindings MC Cardholder"
+           "address_line1"   "140 2nd Street"
+           "address_line2"   "4th Floor"
+           "address_city"    "San Francisco"
+           "address_zip"     "94105"
+           "address_state"   "CA"
+           "address_country" "USA"}
+      c  (ecr/retrieve "customer-id")]
+  (ecc/create c cc))
+```
+
+`clojurewerkz.elephant.cards/create-from-token` does the same thing
+but takes a card token instead of a map.
+
+
 ## Changes Between 1.0.0-beta7 and 1.0.0-beta8
 
 ### Stripe Java Client Upgrade
