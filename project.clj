@@ -22,4 +22,7 @@
   :javac-options      ["-target" "1.6" "-source" "1.6"]
   :jvm-opts           ["-Dfile.encoding=utf-8"]
   :source-paths       ["src/clojure"]
-  :java-source-paths  ["src/java"])
+  :java-source-paths  ["src/java"]
+  :test-selectors {:default (constantly true)
+                   :focus   :focus
+                   :all     (constantly true)})
