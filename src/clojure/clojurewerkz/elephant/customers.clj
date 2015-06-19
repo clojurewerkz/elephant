@@ -29,6 +29,18 @@
   [^IPersistentMap customer ^IPersistentMap subscription]
   (sub/create customer subscription))
 
+(defn ^IPersistentMap update
+  [^IPersistentMap customer ^IPersistentMap m]
+  (if-let [o (:__origin__ customer)]
+    (cnv/customer->map (.update o m))
+    (throw (IllegalArgumentException.
+            "customers/update only accepts maps returned by customers/create, charges/retrieve, and customers/list"))))
+
+(defn ^IPersistentMap update-default-source
+  [^IPersistentMap customer ^String id]
+  (update customer {"default_source" id}))
+
+
 (defn list
   ([]
      (list {}))

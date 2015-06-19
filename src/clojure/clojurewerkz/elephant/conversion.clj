@@ -235,10 +235,11 @@
 
 (defn ^IPersistentMap customer->map
   [^Customer c]
-  {:id           (.getId c)
-   :description  (.getDescription c)
-   :default-card (.getDefaultCard c)
-   :email        (.getEmail c)
+  {:id             (.getId c)
+   :description    (.getDescription c)
+   :default-card   (.getDefaultCard c)
+   :default-source (.getDefaultSource c)
+   :email          (.getEmail c)
    :account-balance (.getAccountBalance c)
    :delinquent?     (.getDelinquent c)
    :next-recurring-charge (when-let [nrc (.getNextRecurringCharge c)]

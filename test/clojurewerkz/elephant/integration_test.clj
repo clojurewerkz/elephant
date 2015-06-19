@@ -126,6 +126,18 @@
             m' (ecc/retrieve c (:id m))]
         (is (= (:id m) (:id m')))))
 
+    (deftest test-customer-list-cards
+      (let [c  (ecr/create customer)
+            m  (ecc/create c cc2)
+            cs (ecc/list c)]
+        (is (coll? cs))))
+
+    (deftest ^:focus test-customer-update-default-source
+      (let [c  (ecr/create customer)
+            m  (ecc/create c cc2)
+            c' (ecr/update-default-source c (:id m))]
+        (is (not (= (:default-source c) (:id m))))
+        (is (= (:default-source c') (:id m)))))
 
     (deftest test-balance-transaction-retrieval
       (let [ch  (ech/create chg)
