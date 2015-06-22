@@ -132,7 +132,7 @@
             cs (ecc/list c)]
         (is (coll? cs))))
 
-    (deftest ^:focus test-customer-update-default-source
+    (deftest test-customer-update-default-source
       (let [c  (ecr/create customer)
             m  (ecc/create c cc2)
             c' (ecr/update-default-source c (:id m))]
