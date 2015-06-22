@@ -1,6 +1,47 @@
+## Changes Between 1.0.0-beta10 and 1.0.0-beta11
+
+### customers/update, customers/update-default-source
+
+`clojurewerkz.elephants.customers/update` is a function that
+updates attributes of an existing customer. Unspecified attributes
+are left unchanged.
+
+`clojurewerkz.elephants.customers/update-default-source` marks
+a source (e.g. a card) as default for its customer:
+
+``` clojure
+(require '[clojurewerkz.elephant.cards :as ecc])
+(require '[clojurewerkz.elephant.customers         :as ecr])
+
+(let [cc {"number"    "5555555555554444"
+           "exp_month" 12
+           "exp_year"  2019
+           "cvc"       "123"
+           "name"      "J Bindings MC Cardholder"
+           "address_line1"   "140 2nd Street"
+           "address_line2"   "4th Floor"
+           "address_city"    "San Francisco"
+           "address_zip"     "94105"
+           "address_state"   "CA"
+           "address_country" "USA"}
+      c  (ecr/retrieve "customer-id")
+      cm (ecc/create c cc)]
+  ;; use this source as default
+  (ecr/update-default-source c (:id cm))
+```
+
+### cards/list, cards/delete
+
+`clojurewerkz.elephants.cards/list` is a function that
+lists cards of a particular customer.
+
+`clojurewerkz.elephants.cards/delete` deletes a card
+of a particular customer.
+
+
 ## Changes Between 1.0.0-beta9 and 1.0.0-beta10
 
-### ### cards/retrieve
+### cards/retrieve
 
 `clojurewerkz.elephant.cards/retrieve` retrieves a customer card:
 
@@ -21,7 +62,7 @@
            "address_country" "USA"}
       c  (ecr/retrieve "customer-id")
       cm (ecc/create c cc)]
-  
+
   (ecc/retrieve c (:id cm))
 ```
 
@@ -108,7 +149,7 @@ The library now compiles with Clojure 1.7.
 
 ## Changes Between 1.0.0-beta3 and 1.0.0-beta4
 
-### More Sensible Charge and Transfer Enabled Values 
+### More Sensible Charge and Transfer Enabled Values
 
 `charge-` and `transfer-enabled` values in customer maps now return `false`
 instead of `nil`.
