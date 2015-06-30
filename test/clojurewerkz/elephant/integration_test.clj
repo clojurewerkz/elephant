@@ -267,13 +267,14 @@
             x (ecr/subscribe c {"plan" (:id p)})]
         (is (= (:id p) (get-in x [:plan :id])))))
 
-    #_ (deftest test-retrieve-subscription
+    (deftest test-retrieve-subscription
       (let [p1 (ep/create (unique-plan plan))
             p2 (ep/create (unique-plan plan))
             c  (ecr/create customer)
             x  (ecr/subscribe c {"plan" (:id p1)})
             y  (esub/update x {"plan" (:id p2)})
-            f1 (esub/retrieve x)]
+            f1 (esub/retrieve c (:id x))]
+        (is (= (:id x) (:id f1)))
         (is (= (:id p2) (get-in y [:plan :id])))))
 
     (deftest test-update-subscription
