@@ -1,3 +1,23 @@
+## Changes Between 1.0.0-beta11 and 1.0.0-beta12
+
+### subscriptions/retrieve
+
+`clojurewerkz.elephants.subscriptions/retrieve` is a new function
+that retrieves an individual subscription that belongs to a particular
+customer:
+
+``` clojure
+(require '[clojurewerkz.elephant.customers     :as ecr])
+(require '[clojurewerkz.elephant.plans         :as ep])
+(require '[clojurewerkz.elephant.subscriptions :as esub])
+
+(let [p (ep/create (unique-plan plan))
+      c (ecr/create customer)
+      s (esub/create c {"plan" (:id p)})]
+  (esub/retrieve s (:id s)))
+```
+
+
 ## Changes Between 1.0.0-beta10 and 1.0.0-beta11
 
 ### customers/update, customers/update-default-source
