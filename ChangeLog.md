@@ -1,3 +1,15 @@
+## Changes Between 1.0.0-beta12 and 1.0.0-beta13
+
+### Coupons
+
+`clojurewerkz.elephant.coupons` is a new namespace
+for working with coupons. It follows
+the API conventions found elsewhere in the library:
+
+`coupons/create`, `coupons/list`, `coupons/retrieve`,
+and `coupons/update` behave very much like their counterparts
+in `clojurewerkz.elephant.plans` and so on.
+
 ## Changes Between 1.0.0-beta11 and 1.0.0-beta12
 
 ### subscriptions/retrieve
