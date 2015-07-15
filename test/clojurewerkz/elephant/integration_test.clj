@@ -7,6 +7,7 @@
               [clojurewerkz.elephant.cards         :as ecc]
               [clojurewerkz.elephant.customers     :as ecr]
               [clojurewerkz.elephant.plans         :as ep]
+              [clojurewerkz.elephant.coupons       :as ec]
               [clojurewerkz.elephant.subscriptions :as esub])
     (:import java.util.UUID
              com.stripe.exception.InvalidRequestException))
@@ -65,7 +66,8 @@
                   "interval"       "month"
                   "interval_count" 2
                   "name"           "J Bindings Plan"}
-        coupon    {"duration"    "once"
+        coupon    {"id" "osio"
+                   "duration"    "once"
                    "percent_off" 10}
         bank-acct {"country"        "US"
                    "routing_number" "110000000"
@@ -75,14 +77,22 @@
                    "tax_id" "000000000"
                    "card"   dc
                    "bank_account" bank-acct}]
-    (defn delete-all-customers
-      []
-      (dotimes [i 3]
-        (doseq [c (ecr/list {"limit" 100})]
-          (try
-            (ecr/delete c)
-            (catch InvalidRequestException ire)))))
 
+  (defn delete-all-customers
+    []
+    (dotimes [i 3]
+      (doseq [c (ecr/list {"limit" 100})]
+        (try
+          (ecr/delete c)
+          (catch InvalidRequestException ire)))))
+  
+  (defn delete-all-coupons
+    []
+    (doseq [c (ec/list)]
+      (try
+        (ec/delete c)
+        (catch InvalidRequestException ire))))
+  
     (deftest test-account-retrieve
       (let [m (ea/retrieve)]
         (is (:id m))
@@ -298,4 +308,29 @@
             x  (esub/create c {"plan" (:id p)})
             xs (esub/list c)]
         (is (= 1 (count xs)))
-        (is (set (map :id xs)) (:id x)))))
+        (is (set (map :id xs)) (:id x))))
+
+    (deftest test-coupon-create
+      (delete-all-coupons)
+      (let [c (ec/create coupon)]
+        (is (= "osio" (:id c)))))
+
+    (deftest test-coupon-retrieve
+      (let [x (ec/create (assoc coupon "id" "osio2"))
+            y (ec/retrieve (:id x))]
+        (is (:id y))
+        (is (= (:id x) (:id y)))
+        (is (= (:percent_off x) (:percent_off y)))))
+    
+    (deftest test-coupons-list
+      (let [l (ec/list)]
+        (is (= 2 (count l)))))
+    
+    (deftest test-apply-coupon-to-subscription
+      (let [p1 (ep/create (unique-plan plan))
+            c (ecr/create customer)
+            s1 (ecr/subscribe c {"plan" (:id p1)})
+            cc (ec/retrieve "osio")
+            y  (esub/update s1 {"coupon" (:id cc)})
+            s2 (esub/retrieve c (:id s1))]
+        (is (= 10 (-> s2 :discount :coupon :percent_off))))))
