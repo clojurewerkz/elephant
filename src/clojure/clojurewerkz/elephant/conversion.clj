@@ -6,7 +6,7 @@
            [com.stripe.model StripeCollection StripeCollectionAPIResource
             Account Balance BalanceTransaction Card Charge Coupon Customer Dispute
             Discount Fee Money NextRecurringCharge Subscription Refund
-            DeletedCustomer]))
+            DeletedCustomer DeletedCoupon]))
 
 
 ;;
@@ -212,6 +212,15 @@
    :valid?             (.getValid c)
    :metadata           (into {} (.getMetadata c))
    :__origin__ c})
+
+(defn coupons-coll->seq
+  [^StripeCollection xs]
+  (map coupon->map (.getData xs)))
+
+(defn ^IPersistentMap deleted-coupon->map
+  [^DeletedCoupon c]
+  {:id       (.getId c)
+   :deleted? (.getDeleted c)})
 
 (defn ^IPersistentMap discount->map
   [^Discount d]
