@@ -331,6 +331,7 @@
         (is (= 2 (count l)))))
     
     (deftest test-applying-coupon-to-subscription
+      (delete-all-coupons)
       (ec/create coupon)
       (let [p1 (ep/create (unique-plan plan))
             c (ecr/create customer)
