@@ -310,23 +310,23 @@
         (is (= 1 (count xs)))
         (is (set (map :id xs)) (:id x))))
 
-    (deftest test-coupon-create
+    (deftest test-create-coupon
       (delete-all-coupons)
       (let [c (ec/create coupon)]
         (is (= "osio" (:id c)))))
 
-    (deftest test-coupon-retrieve
+    (deftest test-retrieve-coupon
       (let [x (ec/create (assoc coupon "id" "osio2"))
             y (ec/retrieve (:id x))]
         (is (:id y))
         (is (= (:id x) (:id y)))
         (is (= (:percent_off x) (:percent_off y)))))
     
-    (deftest test-coupons-list
+    (deftest test-list-coupons
       (let [l (ec/list)]
         (is (= 2 (count l)))))
     
-    (deftest test-apply-coupon-to-subscription
+    (deftest test-applying-coupon-to-subscription
       (let [p1 (ep/create (unique-plan plan))
             c (ecr/create customer)
             s1 (ecr/subscribe c {"plan" (:id p1)})
