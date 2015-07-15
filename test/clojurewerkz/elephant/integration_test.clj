@@ -338,4 +338,4 @@
             cc (ec/retrieve "osio")
             y  (esub/update s1 {"coupon" (:id cc)})
             s2 (esub/retrieve c (:id s1))]
-        (is (= 10 (-> s2 :discount :coupon :percent_off))))))
+        (is (= 10 (get-in s2 [:discount :coupon :percent_off]))))))
