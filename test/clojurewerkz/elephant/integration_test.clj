@@ -241,7 +241,7 @@
       (let [x  (ecr/create customer)
             xs (ecr/list)]
         (is (sequential? xs))
-        (is (= #{(:id x)} (set (map :id xs))))))
+        (is ((set (map :id xs)) (:id x)))))
 
     (deftest test-plan-create
       (let [x (ep/create (unique-plan plan))]
@@ -316,6 +316,7 @@
         (is (= "osio" (:id c)))))
 
     (deftest test-retrieve-coupon
+      (delete-all-coupons)
       (let [x (ec/create (assoc coupon "id" "osio2"))
             y (ec/retrieve (:id x))]
         (is (:id y))
@@ -323,6 +324,9 @@
         (is (= (:percent_off x) (:percent_off y)))))
     
     (deftest test-list-coupons
+      (delete-all-coupons)
+      (ec/create coupon)
+      (ec/create (assoc coupon "id" "osio2"))
       (let [l (ec/list)]
         (is (= 2 (count l)))))
     
