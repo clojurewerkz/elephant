@@ -1,6 +1,6 @@
 (ns clojurewerkz.elephant.coupons
   (:refer-clojure :exclude [list])
-  (:require [clojurewerkz.elephant.conversion    :as cnv]
+  (:require [clojurewerkz.elephant.conversion :as cnv]
             [clojure.walk :as wlk])
   (:import [clojure.lang IPersistentMap]
            [com.stripe.model Coupon]))
@@ -23,10 +23,6 @@
     (cnv/coupon->map (.update o))
     (throw (IllegalArgumentException.
             "coupon/update only accepts maps returned by coupons/create and coupons/retrieve"))))
-
-(defn ^IPersistentMap update-default-source
-  [^IPersistentMap customer ^String id]
-  (update customer {"default_source" id}))
 
 (defn list
   ([]
