@@ -1,3 +1,16 @@
+## Changes Between 1.0.0-beta13 and 1.0.0-beta14
+
+### Invoice Items
+
+`clojurewerkz.elephant.invoice-items` is a new namespace
+for working with invoice items. It follows
+the API conventions found elsewhere in the library:
+
+`invoice-items/create`, `invoice-items/list`, `invoice-items/retrieve`,
+and `coupons/invoice-items` behave very much like their counterparts
+in `clojurewerkz.elephant.plans` and so on.
+
+
 ## Changes Between 1.0.0-beta12 and 1.0.0-beta13
 
 ### Coupons
