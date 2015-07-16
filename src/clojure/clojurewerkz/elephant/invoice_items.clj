@@ -1,5 +1,5 @@
 (ns clojurewerkz.elephant.invoice-items
-  (:refer-clojure :exclude [list])
+  (:refer-clojure :exclude [list update])
   (:require [clojurewerkz.elephant.conversion :as cnv]
             [clojure.walk :as wlk])
   (:import [clojure.lang IPersistentMap]

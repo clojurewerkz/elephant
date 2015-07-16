@@ -1,5 +1,5 @@
 (ns clojurewerkz.elephant.customers
-  (:refer-clojure :exclude [list])
+  (:refer-clojure :exclude [list update])
   (:require [clojurewerkz.elephant.conversion    :as cnv]
             [clojurewerkz.elephant.subscriptions :as sub]
             [clojure.walk :as wlk])
