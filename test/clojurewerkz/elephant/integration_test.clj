@@ -8,6 +8,7 @@
               [clojurewerkz.elephant.customers     :as ecr]
               [clojurewerkz.elephant.plans         :as ep]
               [clojurewerkz.elephant.coupons       :as ec]
+              [clojurewerkz.elephant.invoice-items :as ii]
               [clojurewerkz.elephant.subscriptions :as esub])
     (:import java.util.UUID
              com.stripe.exception.InvalidRequestException))
@@ -91,6 +92,13 @@
     (doseq [c (ec/list)]
       (try
         (ec/delete c)
+        (catch InvalidRequestException ire))))
+
+  (defn delete-all-invoice-items
+    []
+    (doseq [i (ii/list)]
+      (try
+        (ii/delete i)
         (catch InvalidRequestException ire))))
   
     (deftest test-account-retrieve
@@ -339,4 +347,17 @@
             cc (ec/retrieve "osio")
             y  (esub/update s1 {"coupon" (:id cc)})
             s2 (esub/retrieve c (:id s1))]
-        (is (= 10 (get-in s2 [:discount :coupon :percent_off]))))))
+        (is (= 10 (get-in s2 [:discount :coupon :percent_off])))))
+
+    (deftest test-invoice-item-crud
+      (delete-all-invoice-items)
+      (let [c (ecr/create customer)
+            ii1 (ii/create {"customer" (:id c)
+                            "amount" 100
+                            "currency" "usd"
+                            "description" "description-1"})
+            ii2 (ii/retrieve (:id ii1))
+            iil (ii/list)]
+        (is (= (:amount ii2) 100))
+        (is (= (:description ii2) "description-1"))
+        (is (= 1 (count iil))))))

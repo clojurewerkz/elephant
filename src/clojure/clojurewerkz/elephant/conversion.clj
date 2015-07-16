@@ -5,8 +5,8 @@
            java.util.List
            [com.stripe.model StripeCollection StripeCollectionAPIResource
             Account Balance BalanceTransaction Card Charge Coupon Customer Dispute
-            Discount Fee Money NextRecurringCharge Subscription Refund
-            DeletedCustomer DeletedCoupon]))
+            Discount Fee Money NextRecurringCharge Subscription Refund InvoiceItem
+            DeletedCustomer DeletedCoupon DeletedInvoiceItem]))
 
 
 ;;
@@ -295,5 +295,28 @@
 
 (defn ^IPersistentMap deleted-customer->map
   [^DeletedCustomer c]
+  {:id       (.getId c)
+   :deleted? (.getDeleted c)})
+
+(defn ^IPersistentMap invoice-item->map
+  [^InvoiceItem i]
+  {:id           (.getId i)
+   :date         (.getDate i)
+   :amount       (.getAmount i)
+   :currency     (.getCurrency i)
+   :live-mode?   (.getLivemode i)
+   :customer     (.getCustomer i)
+   :description  (.getDescription i)
+   :invoice      (.getInvoice i)
+   :subscription (.getSubscription i)
+   :metadata     (into {} (.getMetadata i))
+   :__origin__            i})
+
+(defn invoice-items-coll->seq
+  [^StripeCollection xs]
+  (map invoice-item->map (.getData xs)))
+
+(defn ^IPersistentMap deleted-invoice-item->map
+  [^DeletedInvoiceItem c]
   {:id       (.getId c)
    :deleted? (.getDeleted c)})
