@@ -1,9 +1,4 @@
-## Changes Between 1.0.0-beta14 and 1.0.0-beta15
-
-### Charge Listing
-
-`clojurewerkz.elephant.charge/list` is a new function that
-lists charges.
+## Changes Between 1.0.0-beta15 and 1.0.0-beta16
 
 ### Invoice Items
 
@@ -14,6 +9,14 @@ the API conventions found elsewhere in the library:
 `invoices/create`, `invoices/list`, `invoices/retrieve`
 behave very much like their counterparts
 in `clojurewerkz.elephant.plans` and so on.
+
+
+## Changes Between 1.0.0-beta14 and 1.0.0-beta15
+
+### Change Listing
+
+`clojurewerkz.elephant.charges/list` is a new function
+that lists charges.
 
 
 ## Changes Between 1.0.0-beta13 and 1.0.0-beta14
