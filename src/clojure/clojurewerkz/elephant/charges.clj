@@ -9,11 +9,11 @@
 ;; API
 ;;
 
-#_ (defn list
+(defn list
   ([m]
-     (cnv/stripe-collection->seq (Charge/all (wlk/stringify-keys m))))
+     (cnv/charge-coll->seq (Charge/all (wlk/stringify-keys m))))
   ([^String api-key m]
-     (cnv/stripe-collection->seq (Charge/all (wlk/stringify-keys m) api-key))))
+     (cnv/charge-coll->seq (Charge/all (wlk/stringify-keys m) api-key))))
 
 (defn create
   ([m]
