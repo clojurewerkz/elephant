@@ -163,6 +163,12 @@
    :failure-code          (.getFailureCode c)
    :__origin__            c})
 
+
+(defn charge-coll->seq
+  [^StripeCollection xs]
+  (map charge->map (.getData xs)))
+
+
 (declare discount->map)
 (declare plan->map)
 (defn ^IPersistentMap subscription->map
