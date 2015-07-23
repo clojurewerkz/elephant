@@ -1,3 +1,21 @@
+## Changes Between 1.0.0-beta14 and 1.0.0-beta15
+
+### Charge Listing
+
+`clojurewerkz.elephant.charge/list` is a new function that
+lists charges.
+
+### Invoice Items
+
+`clojurewerkz.elephant.invoices` is a new namespace
+for working with invoices. It follows
+the API conventions found elsewhere in the library:
+
+`invoices/create`, `invoices/list`, `invoices/retrieve`
+behave very much like their counterparts
+in `clojurewerkz.elephant.plans` and so on.
+
+
 ## Changes Between 1.0.0-beta13 and 1.0.0-beta14
 
 ### Invoice Items
@@ -6,8 +24,8 @@
 for working with invoice items. It follows
 the API conventions found elsewhere in the library:
 
-`invoice-items/create`, `invoice-items/list`, `invoice-items/retrieve`,
-and `coupons/invoice-items` behave very much like their counterparts
+`invoice-items/create`, `invoice-items/list`, and `invoice-items/retrieve`
+behave very much like their counterparts
 in `clojurewerkz.elephant.plans` and so on.
 
 
