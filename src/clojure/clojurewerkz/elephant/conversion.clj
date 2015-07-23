@@ -6,7 +6,7 @@
            [com.stripe.model StripeCollection StripeCollectionAPIResource
             Account Balance BalanceTransaction Card Charge Coupon Customer Dispute
             Discount Fee Money NextRecurringCharge Subscription Refund InvoiceItem
-            DeletedCustomer DeletedCoupon DeletedInvoiceItem]))
+            Invoice DeletedCustomer DeletedCoupon DeletedInvoiceItem]))
 
 
 ;;
@@ -326,3 +326,40 @@
   [^DeletedInvoiceItem c]
   {:id       (.getId c)
    :deleted? (.getDeleted c)})
+
+;; TODO: implement InvoiceLineItemCollection
+(defn ^IPersistentMap invoice->map
+  [^Invoice i]
+  {:subtotal             (.getSubtotal i)
+   :total                (.getTotal i)
+   :amount-due           (.getAmountDue i)
+   :starting-balance     (.getStartingBalance i)
+   :ending-balance       (.getEndingBalance i)
+   :id                   (.getId i)
+   :created              (.getCreated i)
+   :next-payment-attempt (.getNextPaymentAttempt i)
+   :attempted            (.getAttempted i)
+   :charge               (.getCharge i)
+   :description          (.getDescription i)
+   :closed               (.getClosed i)
+   :customer             (.getCustomer i)
+   :date                 (.getDate i)
+   :paid?                (.getPaid i)
+   :period-start         (.getPeriodStart i)
+   :period-end           (.getPeriodEnd i)
+   :discount             (when-let [d (.getDiscount i)] (discount->map d))
+   :currency             (.getCurrency i)
+   :live-mode?           (.getLivemode i)
+   :attempt-count        (.getAttemptCount i)
+   :subscription         (.getSubscription i)
+   :application-fee      (.getApplicationFee i)
+   :metadata             (into {} (.getMetadata i))
+   :forgiven             (.getForgiven i)
+   :statement-descriptor (.getStatementDescriptor i)
+   :tax                  (.getTax i)
+   :tax-percent          (.getTaxPercent i)   
+   :__origin__           i})
+
+(defn invoice-coll->seq
+  [^StripeCollection xs]
+  (map invoice->map (.getData xs)))
