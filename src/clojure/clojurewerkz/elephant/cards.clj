@@ -33,7 +33,7 @@
   [^IPersistentMap customer]
   (if-let [o (:__origin__ customer)]
     ;; TODO: pagination
-    (map cnv/card->map (into [] (.. o getCards getData)))
+    (map cnv/card->map (into [] (.. o getSources getData)))
     (throw (IllegalArgumentException.
             "cards/list only accepts maps returned by customer/create and other library functions that return customer maps"))))
 

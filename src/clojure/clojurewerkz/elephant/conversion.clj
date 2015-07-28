@@ -154,9 +154,9 @@
    :captured?  (.getCaptured c)
    :dispute    (when-let [d (.getDispute c)]
                  (dispute->map d))
-   :card       (card->map (.getCard c))
+   :card       (card->map (.getSource c))
    :description           (.getDescription c)
-   :statement-description (.getStatementDescription c)
+   :statement-descriptor  (.getStatementDescriptor c)
    :invoice               (.getInvoice c)
    :customer              (.getCustomer c)
    :failure-message       (.getFailureMessage c)
@@ -259,7 +259,7 @@
    :delinquent?     (.getDelinquent c)
    :next-recurring-charge (when-let [nrc (.getNextRecurringCharge c)]
                             (next-recurring-charge->map nrc))
-   :cards           (doall (map card->map (if-let [^StripeCollectionAPIResource xs (.getCards c)]
+   :cards           (doall (map card->map (if-let [^StripeCollectionAPIResource xs (.getSources c)]
                                             (.getData xs)
                                             [])))
    :subscriptions   (doall (map subscription->map (if-let [^StripeCollectionAPIResource xs (.getSubscriptions c)]
@@ -290,7 +290,7 @@
    :interval-count (.getIntervalCount p)
    :name           (.getName p)
    :trial-period-days     (.getTrialPeriodDays p)
-   :statement-description (.getStatementDescription p)
+   :statement-descriptor (.getStatementDescriptor p)
    :live-mode?            (.getLivemode p)
    :metadata              (into {} (.getMetadata p))
    :__origin__ p})
