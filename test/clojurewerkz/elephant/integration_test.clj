@@ -357,7 +357,7 @@
                             "currency" "usd"
                             "description" "description-1"})
             ii2 (ii/retrieve (:id ii1))
-            iil (ii/list)]
+            iil (ii/list {"customer" (:id c)})]
         (is (= (:amount ii2) 100))
         (is (= (:description ii2) "description-1"))
         (is (= 1 (count iil))))))
