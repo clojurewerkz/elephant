@@ -1,3 +1,11 @@
+## Changes Between 1.0.0-beta16 and 1.0.0-beta17
+
+### Update to Most Recent Stripe API
+
+The client has been updated for the most recent (as of July 2015)
+[Stripe API version](https://stripe.com/docs/upgrades).
+
+
 ## Changes Between 1.0.0-beta15 and 1.0.0-beta16
 
 ### Invoice Items
