@@ -129,8 +129,8 @@
     (deftest test-charge-create-with-statement-description
       (let [s  "Elephant"
             m  (ech/create (merge chg {:description "integration tests"
-                                       :statement_description s}))]
-        (is (= s (:statement-description m)))))
+                                       :statement_descriptor s}))]
+        (is (= s (:statement-descriptor m)))))
 
     (deftest test-customer-create-card
       (let [c (ecr/create customer)
@@ -264,8 +264,8 @@
 
     (deftest test-plan-create-with-statement-description
       (let [s "ClojureWerkz"
-            x (ep/create (merge (unique-plan plan) {"statement_description" s}))]
-        (is (= s (:statement-description x)))))
+            x (ep/create (merge (unique-plan plan) {"statement_descriptor" s}))]
+        (is (= s (:statement-descriptor x)))))
 
     (deftest test-plan-update
       (let [s "New Plan Name"
