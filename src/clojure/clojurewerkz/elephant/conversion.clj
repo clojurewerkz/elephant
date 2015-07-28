@@ -250,31 +250,33 @@
 
 (defn ^IPersistentMap customer->map
   [^Customer c]
-  {:id             (.getId c)
-   :description    (.getDescription c)
-   :default-card   (.getDefaultCard c)
-   :default-source (.getDefaultSource c)
-   :email          (.getEmail c)
-   :account-balance (.getAccountBalance c)
-   :delinquent?     (.getDelinquent c)
-   :next-recurring-charge (when-let [nrc (.getNextRecurringCharge c)]
-                            (next-recurring-charge->map nrc))
-   :cards           (doall (map card->map (if-let [^StripeCollectionAPIResource xs (.getSources c)]
-                                            (.getData xs)
-                                            [])))
-   :subscriptions   (doall (map subscription->map (if-let [^StripeCollectionAPIResource xs (.getSubscriptions c)]
-                                                    (.getData xs)
-                                                    [])))
-   ;; TODO: convert to UTC date with clj-time
-   :created      (.getCreated c)
-   :discount     (when-let [d (.getDiscount c)]
-                   (discount->map d))
-   ;; TODO: convert to UTC date with clj-time
-   :trial-end    (.getTrialEnd c)
-   :live-mode?   (.getLivemode c)
-   :deleted?     (.getDeleted c)
-   :metadata     (into {} (.getMetadata c))
-   :__origin__  c})
+  (let [sources (doall (map card->map (if-let [^StripeCollectionAPIResource xs (.getSources c)]
+                                        (.getData xs)
+                                        [])))]
+    {:id             (.getId c)
+     :description    (.getDescription c)
+     :default-card   (.getDefaultCard c)
+     :default-source (.getDefaultSource c)
+     :email          (.getEmail c)
+     :account-balance (.getAccountBalance c)
+     :delinquent?     (.getDelinquent c)
+     :next-recurring-charge (when-let [nrc (.getNextRecurringCharge c)]
+                              (next-recurring-charge->map nrc))
+     :sources         sources
+     :cards           sources
+     :subscriptions   (doall (map subscription->map (if-let [^StripeCollectionAPIResource xs (.getSubscriptions c)]
+                                                      (.getData xs)
+                                                      [])))
+     ;; TODO: convert to UTC date with clj-time
+     :created      (.getCreated c)
+     :discount     (when-let [d (.getDiscount c)]
+                     (discount->map d))
+     ;; TODO: convert to UTC date with clj-time
+     :trial-end    (.getTrialEnd c)
+     :live-mode?   (.getLivemode c)
+     :deleted?     (.getDeleted c)
+     :metadata     (into {} (.getMetadata c))
+     :__origin__  c}))
 
 (declare plan->map)
 (defn plans-coll->seq
