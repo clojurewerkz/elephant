@@ -24,7 +24,7 @@
 (defn retrieve
   [^IPersistentMap customer ^String card-id]
   (if-let [o (:__origin__ customer)]
-    (cnv/card->map (let [cs (.getCards o)]
+    (cnv/card->map (let [cs (.getSources o)]
                      (.retrieve cs card-id)))
     (throw (IllegalArgumentException.
             "cards/retrieve only accepts maps returned by customer/create and other library functions that return customer maps"))))
