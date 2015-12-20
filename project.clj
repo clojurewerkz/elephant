@@ -6,11 +6,12 @@
   :dependencies [[org.clojure/clojure    "1.7.0"]
                  [com.stripe/stripe-java "1.40.0"]]
   :profiles {:1.6 {:dependencies [[org.clojure/clojure "1.6.0"]]}
+             :1.8 {:dependencies [[org.clojure/clojure "1.8.0-RC4"]]}
              :master {:dependencies [[org.clojure/clojure "1.8.0-master-SNAPSHOT"]]}
              :dev {:resource-paths ["test/resources"]
                    :plugins [[lein-codox "0.9.0"]]
                    :codox {:sources ["src/clojure"]}}}
-  :aliases {"all" ["with-profile" "dev:dev,1.6:dev,master"]}
+  :aliases {"all" ["with-profile" "dev:dev,1.6:dev,1.8:dev,master"]}
   :repositories {"sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"
                              :snapshots false
                              :releases {:checksum :fail}}
