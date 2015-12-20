@@ -8,9 +8,8 @@
   :profiles {:1.6 {:dependencies [[org.clojure/clojure "1.6.0"]]}
              :master {:dependencies [[org.clojure/clojure "1.8.0-master-SNAPSHOT"]]}
              :dev {:resource-paths ["test/resources"]
-                   :plugins [[codox "0.8.10"]]
-                   :codox {:sources ["src/clojure"]
-                           :output-dir "doc/api"}}}
+                   :plugins [[lein-codox "0.9.0"]]
+                   :codox {:sources ["src/clojure"]}}}
   :aliases {"all" ["with-profile" "dev:dev,1.6:dev,master"]}
   :repositories {"sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"
                              :snapshots false
