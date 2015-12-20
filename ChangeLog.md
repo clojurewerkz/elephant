@@ -1,3 +1,11 @@
+## Changes Between 1.0.0-beta17 and 1.0.0-beta18
+
+### Stripe Java Client Upgrade
+
+Stripe Java client was upgraded to `1.40.0`.
+
+
+
 ## Changes Between 1.0.0-beta16 and 1.0.0-beta17
 
 ### Update to Most Recent Stripe API
