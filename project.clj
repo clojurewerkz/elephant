@@ -1,4 +1,4 @@
-(defproject clojurewerkz/elephant "1.0.0-beta18"
+(defproject clojurewerkz/elephant "1.0.0-rc1-SNAPSHOT"
   :url         "https://github.com/clojurewerkz/elephant"
   :license     {:name "Eclipse Public License"
                 :url "http://www.eclipse.org/legal/epl-v10.html"}
