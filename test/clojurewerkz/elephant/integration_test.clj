@@ -21,7 +21,7 @@
 
 (let [cc {"number"    "4242424242424242"
           "exp_month" 12
-          "exp_year"  2015
+          "exp_year"  2016
           "cvc"       "123"
           "name"      "J Bindings Cardholder"
           "address_line1"   "140 2nd Street"
@@ -44,7 +44,7 @@
         ;; debit card
         dc  {"number"    "4000056655665556"
              "exp_month" 12
-             "exp_year"  2015
+             "exp_year"  2016
              "cvc"       "123"
              "name"            "J Bindings Debitholder"
              "address_line1"   "140 2nd Street"
@@ -201,7 +201,7 @@
     (deftest test-charge-with-invalid-card
       (let [m (assoc chg "card" {"number" "4242424242424241"
                                  "exp_month" 12
-                                 "exp_year"  2015})]
+                                 "exp_year"  2016})]
         (is (thrown? com.stripe.exception.CardException
                      (ech/create m)))))
 
