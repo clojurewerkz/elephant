@@ -1,4 +1,9 @@
-## Changes Between 1.0.0-beta17 and 1.0.0-beta18
+## Changes Between 1.0.0-beta18 and 1.0.0-rc1 (unreleased)
+
+No changes yet.
+
+
+## Changes Between 1.0.0-beta17 and 1.0.0-beta18 (September 4th, 2016)
 
 ### Stripe Java Client Upgrade
 
