@@ -11,7 +11,8 @@ Clojure data structures.
 
 ## Project Maturity
 
-Elephant is *very* young and under active development.
+Elephant is still relative young but the most active stage development
+is now over. Breaking public API changes are relatively unlikely.
 
 
 ## Artifacts
