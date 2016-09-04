@@ -2,7 +2,11 @@
 
 ### Stripe Java Client Upgrade
 
-Stripe Java client was upgraded to `1.40.0`.
+Stripe Java client was upgraded to `2.8.0`.
+
+GitHub issue: [elephant#6](https://github.com/clojurewerkz/elephant/pull/6)
+
+Contributed by Robert Zuber.
 
 
 
