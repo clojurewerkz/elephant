@@ -32,7 +32,7 @@ definition to your `pom.xml`:
 
 With Leiningen:
 
-    [clojurewerkz/elephant "1.0.0-beta17"]
+    [clojurewerkz/elephant "1.0.0-beta18"]
 
 
 With Maven:
@@ -40,7 +40,7 @@ With Maven:
     <dependency>
       <groupId>clojurewerkz</groupId>
       <artifactId>elephant</artifactId>
-      <version>1.0.0-beta17</version>
+      <version>1.0.0-beta18</version>
     </dependency>
 
 
