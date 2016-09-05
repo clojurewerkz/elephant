@@ -1,6 +1,7 @@
 (ns clojurewerkz.elephant.invoice-items
   (:refer-clojure :exclude [list update])
   (:require [clojurewerkz.elephant.conversion :as cnv]
+            [clojurewerkz.elephant.util :refer (api-key->request-options)]
             [clojure.walk :as wlk])
   (:import [clojure.lang IPersistentMap]
            [com.stripe.model InvoiceItem]))
@@ -28,9 +29,9 @@
   ([]
      (list {}))
   ([m]
-     (cnv/invoice-items-coll->seq (InvoiceItem/all (wlk/stringify-keys m))))
+     (cnv/invoice-items-coll->seq (InvoiceItem/list (wlk/stringify-keys m))))
   ([^String api-key m]
-     (cnv/invoice-items-coll->seq (InvoiceItem/all (wlk/stringify-keys m)) api-key)))
+     (cnv/invoice-items-coll->seq (InvoiceItem/list (wlk/stringify-keys m) (api-key->request-options api-key)))))
 
 (defn ^IPersistentMap delete
   ([m]

@@ -1,6 +1,7 @@
 (ns clojurewerkz.elephant.charges
   "Operations on charges"
   (:require [clojurewerkz.elephant.conversion :as cnv]
+            [clojurewerkz.elephant.util :refer (api-key->request-options)]
             [clojure.walk :as wlk])
   (:import [com.stripe.model Charge]
            [clojure.lang IPersistentMap]))
@@ -11,9 +12,9 @@
 
 (defn list
   ([m]
-     (cnv/charge-coll->seq (Charge/all (wlk/stringify-keys m))))
+     (cnv/charge-coll->seq (Charge/list (wlk/stringify-keys m))))
   ([^String api-key m]
-     (cnv/charge-coll->seq (Charge/all (wlk/stringify-keys m) api-key))))
+     (cnv/charge-coll->seq (Charge/list (wlk/stringify-keys m) (api-key->request-options api-key)))))
 
 (defn create
   ([m]
