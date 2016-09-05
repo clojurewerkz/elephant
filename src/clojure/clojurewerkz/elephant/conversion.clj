@@ -6,7 +6,7 @@
            [com.stripe.model StripeCollection
             Account Balance BalanceTransaction Card Charge Coupon Customer Dispute
             Discount Fee Money NextRecurringCharge Subscription Refund InvoiceItem
-            Invoice DeletedCustomer DeletedCoupon DeletedInvoiceItem]))
+            InvoiceLineItem Invoice DeletedCustomer DeletedCoupon DeletedInvoiceItem]))
 
 
 ;;
@@ -329,7 +329,29 @@
   {:id       (.getId c)
    :deleted? (.getDeleted c)})
 
-;; TODO: implement InvoiceLineItemCollection
+(defn ^IPersistentMap invoice-line-item->map
+  [^InvoiceLineItem i]
+  (let [period (.getPeriod i)]
+    {:id            (.getId i)
+     :amount        (.getAmount i)
+     :currency      (.getCurrency i)
+     :description   (.getDescription i)
+     :discountable? (.getDiscountable i)
+     :live-mode?    (.getLivemode i)
+     :metadata      (into {} (.getMetadata i))
+     :period        {:start (.getStart period)
+                     :end   (.getEnd period)}
+     :plan          (some-> i .getPlan plan->map)
+     :proration?    (.getProration i)
+     :quantity      (.getQuantity i)
+     :subscription  (.getSubscription i)
+     :type          (.getType i)
+     :__origin__    i}))
+
+(defn invoice-line-items-coll->seq
+  [^StripeCollection xs]
+  (map invoice-line-item->map (.getData xs)))
+
 (defn ^IPersistentMap invoice->map
   [^Invoice i]
   {:subtotal             (.getSubtotal i)
@@ -351,6 +373,7 @@
    :period-end           (.getPeriodEnd i)
    :discount             (when-let [d (.getDiscount i)] (discount->map d))
    :currency             (.getCurrency i)
+   :invoice-items        (-> i .getLines invoice-line-items-coll->seq)
    :live-mode?           (.getLivemode i)
    :attempt-count        (.getAttemptCount i)
    :subscription         (.getSubscription i)

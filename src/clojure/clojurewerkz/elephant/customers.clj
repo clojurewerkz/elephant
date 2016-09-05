@@ -29,6 +29,13 @@
   [^IPersistentMap customer ^IPersistentMap subscription]
   (sub/create customer subscription))
 
+(defn cancel-all-subscriptions
+  [^IPersistentMap customer]
+  (some->> customer
+           :subscriptions
+           (map sub/cancel)
+           doall))
+
 (defn ^IPersistentMap update
   [^IPersistentMap customer ^IPersistentMap m]
   (if-let [o (:__origin__ customer)]
@@ -40,6 +47,9 @@
   [^IPersistentMap customer ^String id]
   (update customer {"default_source" id}))
 
+(defn ^IPersistentMap apply-coupon
+  [^IPersistentMap customer ^String coupon]
+  (update customer {"coupon" coupon}))
 
 (defn list
   ([]

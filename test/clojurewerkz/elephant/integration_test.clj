@@ -8,6 +8,7 @@
               [clojurewerkz.elephant.customers     :as ecr]
               [clojurewerkz.elephant.plans         :as ep]
               [clojurewerkz.elephant.coupons       :as ec]
+              [clojurewerkz.elephant.invoices      :as invoices]
               [clojurewerkz.elephant.invoice-items :as ii]
               [clojurewerkz.elephant.subscriptions :as esub])
     (:import java.util.UUID
@@ -100,7 +101,7 @@
       (try
         (ii/delete i)
         (catch InvalidRequestException ire))))
-  
+
     (deftest test-account-retrieve
       (let [m (ea/retrieve)]
         (is (:id m))
@@ -360,4 +361,19 @@
             iil (ii/list {"customer" (:id c)})]
         (is (= (:amount ii2) 100))
         (is (= (:description ii2) "description-1"))
-        (is (= 1 (count iil))))))
+        (is (= 1 (count iil)))))
+
+  (deftest test-upcoming-invoice
+    (delete-all-invoice-items)
+    (let [c (ecr/create customer)
+          ii1 (ii/create {"customer" (:id c)
+                          "amount" 101
+                          "currency" "usd"
+                          "description" "description-1"})
+          ii2 (ii/create {"customer" (:id c)
+                          "amount" 102
+                          "currency" "usd"
+                          "description" "description-2"})
+          invoice (invoices/upcoming {"customer" (:id c)})]
+      (is (= 2 (-> invoice :invoice-items count)))
+      (is (= #{101 102} (->> invoice :invoice-items (map :amount) set))))))
