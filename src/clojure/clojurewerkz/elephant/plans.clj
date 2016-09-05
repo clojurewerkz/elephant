@@ -1,5 +1,6 @@
 (ns clojurewerkz.elephant.plans
   (:require [clojurewerkz.elephant.conversion :as cnv]
+            [clojurewerkz.elephant.util :refer (api-key->request-options)]
             [clojure.walk :as wlk])
   (:import [com.stripe.model Plan]
            [clojure.lang IPersistentMap])
@@ -11,9 +12,9 @@
 
 (defn list
   ([m]
-     (cnv/plans-coll->seq (Plan/all (wlk/stringify-keys m))))
+     (cnv/plans-coll->seq (Plan/list (wlk/stringify-keys m))))
   ([^String api-key m]
-     (cnv/plans-coll->seq (Plan/all (wlk/stringify-keys m) api-key))))
+     (cnv/plans-coll->seq (Plan/list (wlk/stringify-keys m) (api-key->request-options api-key)))))
 
 (defn create
   [^IPersistentMap opts]
