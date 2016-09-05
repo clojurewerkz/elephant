@@ -24,6 +24,17 @@
     (throw (IllegalArgumentException.
             "invoice/update only accepts maps returned by invoice/create and invoice/retrieve"))))
 
+(defn ^IPersistentMap upcoming
+  [^IPersistentMap m]
+  (cnv/invoice->map (Invoice/upcoming m)))
+
+(defn ^boolean prorated?
+  "True if at least one item and all items are prorated."
+  [^IPersistentMap invoice]
+  (let [items (:invoice-items invoice)]
+    (and (-> items count pos?)
+         (every? :proration items))))
+
 (defn list
   ([]
      (list {}))
