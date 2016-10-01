@@ -7,7 +7,7 @@
                  [com.stripe/stripe-java "2.8.0"]]
   :profiles {:1.6 {:dependencies [[org.clojure/clojure "1.6.0"]]}
              :1.7 {:dependencies [[org.clojure/clojure "1.7.0"]]}
-             :1.9 {:dependencies [[org.clojure/clojure "1.9.0-alpha11"]]}
+             :1.9 {:dependencies [[org.clojure/clojure "1.9.0-alpha13"]]}
              :master {:dependencies [[org.clojure/clojure "1.9.0-master-SNAPSHOT"]]}
              :dev {:resource-paths ["test/resources"]
                    :plugins [[lein-codox "0.9.0"]]
