@@ -1,5 +1,6 @@
 (ns clojurewerkz.elephant.charges
   "Operations on charges"
+  (:refer-clojure :exclude [list])
   (:require [clojurewerkz.elephant.conversion :as cnv]
             [clojurewerkz.elephant.util :refer (api-key->request-options)]
             [clojure.walk :as wlk])
