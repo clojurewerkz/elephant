@@ -11,10 +11,10 @@
                    :plugins [[lein-codox "0.9.0"]]
                    :codox {:sources ["src/clojure"]}}}
   :aliases {"all" ["with-profile" "dev:dev,1.6:dev,1.7:dev,1.9:dev,master"]}
-  :repositories {"sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"
+  :repositories {"sonatype" {:url "https://oss.sonatype.org/content/repositories/releases"
                              :snapshots false
                              :releases {:checksum :fail}}
-                 "sonatype-snapshots" {:url "http://oss.sonatype.org/content/repositories/snapshots"
+                 "sonatype-snapshots" {:url "https://oss.sonatype.org/content/repositories/snapshots"
                                        :snapshots true
                                        :releases {:checksum :fail :update :always}}}
   :javac-options      ["-target" "1.6" "-source" "1.6"]
