@@ -10,7 +10,7 @@
              :dev {:resource-paths ["test/resources"]
                    :plugins [[lein-codox "0.9.0"]]
                    :codox {:sources ["src/clojure"]}}}
-  :aliases {"all" ["with-profile" "dev:dev,1.6:dev,1.7:dev,1.9:dev,master"]}
+  :aliases {"all" ["with-profile" "dev:dev,1.8:dev,master"]}
   :repositories {"sonatype" {:url "https://oss.sonatype.org/content/repositories/releases"
                              :snapshots false
                              :releases {:checksum :fail}}
